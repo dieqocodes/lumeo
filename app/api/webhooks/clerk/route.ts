@@ -60,7 +60,7 @@ export async function POST(req: Request) {
         userId: id as string,
         firstName: first_name as string,
         username: username as string,
-        lastName: last_name as string,
+        lastName: last_name ? (last_name as string) : "",
         imageUrl: image_url as string,
       },
     });
