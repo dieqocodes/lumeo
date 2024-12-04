@@ -14,41 +14,22 @@ datasource db {
 }
 
 model Users {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
   createdAt DateTime @default(now())
-  userId String
-  firstName String
-  lastName String
-  username String
+  name String
+  username String?
   imageUrl String
   posts Posts[]
-  likes Likes[]
   comments Comments[]
-
-  @@unique([userId])
-  @@index([userId])
 }
 
 model Posts {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
+  imageUrl String
   userId String
-  content String?
-  imageUrl String?
-  user Users @relation(fields: [userId], references: [userId])
-  likes Likes[]
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments Comments[]
-
-  @@index([id])
-}
-
-model Likes {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
-  userId String
-  postId String
-  user Users @relation(fields: [userId], references: [userId])
-  post Posts @relation(fields: [postId], references: [id])
 }
 
 model Comments {
@@ -57,6 +38,6 @@ model Comments {
   content String
   userId String
   postId String
-  user Users @relation(fields: [userId], references: [userId])
-  post Posts @relation(fields: [postId], references: [id])
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

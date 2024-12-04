@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import Providers from "@/components/providers";
 import { poppins } from "./fonts";
+import { Toaster } from "@/components/ui/sonner";
+import Nav from "@/components/nav";
 
 export const metadata: Metadata = {
   title: "Lumeo",
@@ -14,10 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${poppins.className}`}>{children}</body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`${poppins.className} antialiased`}>
+        <Providers>
+          <Nav />
+          {children}
+          <Toaster />
+        </Providers>
+      </body>
+    </html>
   );
 }
