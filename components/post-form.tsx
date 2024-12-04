@@ -17,7 +17,7 @@ const formSchema = z.object({
   imageUrl: z.string().min(1),
 });
 
-export default function PostForm({ id }: { id: string }) {
+export default function PostForm() {
   const [imageAssets, setImageAssets] = useState<string | null>(null);
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
     onClientUploadComplete: ([data]) => {
