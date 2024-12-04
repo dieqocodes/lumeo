@@ -1,6 +1,5 @@
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import db from "@/db";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Separator } from "@/components/ui/separator";
 import Grid from "@/components/grid";
 
