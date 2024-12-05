@@ -3,7 +3,6 @@ import "./globals.css";
 import Providers from "@/components/providers";
 import { poppins } from "./fonts";
 import { Toaster } from "@/components/ui/sonner";
-import Nav from "@/components/nav";
 
 export const metadata: Metadata = {
   title: "Lumeo",
@@ -19,7 +18,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
         <Providers>
-          <Nav />
           {children}
           <Toaster />
         </Providers>
