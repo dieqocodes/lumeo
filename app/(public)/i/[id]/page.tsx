@@ -28,6 +28,7 @@ export default async function Image({
     },
   });
 
+  const postId = data?.id;
   return (
     <MaxWidthWrapper className="flex gap-4 py-10">
       <div className="w-1/2 h-[85vh] grid place-items-center">
@@ -66,7 +67,7 @@ export default async function Image({
               </div>
             ))}
           </div>
-          <CommentForm postId={data?.id!} />
+          <CommentForm postId={postId!} />
         </div>
       </div>
     </MaxWidthWrapper>

@@ -21,6 +21,7 @@ export default async function Profile() {
     },
   });
 
+  const posts = data?.posts;
   return (
     <MaxWidthWrapper className="py-10 flex flex-col gap-4">
       <div className="w-full h-[20vh] flex jsutify-start items-center gap-2">
@@ -34,7 +35,7 @@ export default async function Profile() {
         </div>
       </div>
       <Separator />
-      <Grid data={data?.posts!} isProfile />
+      <Grid data={posts!} isProfile />
     </MaxWidthWrapper>
   );
 }
