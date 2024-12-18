@@ -13,31 +13,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+// Define the models
 model Users {
-  id String @id @default(cuid())
+  id        String      @id @default(uuid())
+  username  String   @unique
+  firstName String
+  lastName  String?
   createdAt DateTime @default(now())
-  name String
-  username String?
-  imageUrl String
-  posts Posts[]
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  posts     Posts[]
+  likes     Likes[]
   comments Comments[]
+  followers Follow[] @relation("followersRelation")
+  following Follow[] @relation("followingRelation")
 }
 
 model Posts {
-  id String @id @default(uuid())
+  id        String      @id @default(uuid())
+  content   String?
+  imageUrl  String?
   createdAt DateTime @default(now())
-  imageUrl String
-  userId String
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt DateTime @updatedAt
+
+  // Foreign Key
+  authorId  String
+  author    Users     @relation(fields: [authorId], references: [id])
+
+  // Relations
+  likes     Likes[]
   comments Comments[]
 }
 
-model Comments {
-  id String @id @default(uuid())
+model Likes {
+  id        String     @id @default(uuid())
   createdAt DateTime @default(now())
-  content String
-  userId String
-  postId String
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post Posts @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  // Foreign Keys
+  userId    String
+  user      Users     @relation(fields: [userId], references: [id])
+
+  postId    String
+  post      Posts     @relation(fields: [postId], references: [id])
+}
+
+model Comments {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Foreign Keys
+  authorId  String
+  author    Users     @relation(fields: [authorId], references: [id])
+
+  postId    String
+  post      Posts     @relation(fields: [postId], references: [id])
+}
+
+model Follow {
+  id         String      @id @default(uuid())
+  createdAt  DateTime @default(now())
+
+  // Self-referencing Foreign Keys
+  followerId String
+  follower   Users     @relation("followersRelation", fields: [followerId], references: [id])
+
+  followingId String
+  following   Users     @relation("followingRelation", fields: [followingId], references: [id])
 }
